@@ -10,16 +10,24 @@ export interface LlmSettings {
 }
 
 export async function complete(settings: LlmSettings, messages: { role: string; content: string }[]): Promise<string> {
-  const res = await fetch("/api/chat", {
+  const direct = !import.meta.env.DEV;
+  const base = settings.baseUrl.replace(/\/$/, "");
+  const res = await fetch(direct ? `${base}/chat/completions` : "/api/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      baseUrl: settings.baseUrl,
-      apiKey: settings.apiKey,
-      model: settings.model,
-      temperature: settings.temperature,
-      messages,
-    }),
+    headers: direct
+      ? { "Content-Type": "application/json", Authorization: `Bearer ${settings.apiKey}` }
+      : { "Content-Type": "application/json" },
+    body: JSON.stringify(
+      direct
+        ? { model: settings.model, temperature: settings.temperature, messages }
+        : {
+            baseUrl: settings.baseUrl,
+            apiKey: settings.apiKey,
+            model: settings.model,
+            temperature: settings.temperature,
+            messages,
+          },
+    ),
   });
   const data = (await res.json()) as { choices?: { message?: { content?: string } }[]; error?: { message?: string } | string };
   if (!res.ok) {

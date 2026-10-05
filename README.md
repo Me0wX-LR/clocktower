@@ -2,6 +2,10 @@
 
 一個用來學《血染鐘樓》核心劇本的聊天牌桌。你是唯一的真人，對面九個村民，旁邊一個說書人。
 
+**線上直接玩：** https://me0wx-lr.github.io/clocktower/
+
+打開連結就能入座，不用安裝，也不用金鑰。
+
 This is a browser chat table for the core Trouble Brewing script. One human plays with nine villagers and a storyteller.
 
 ## 兩種心態

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 8080",
     "build": "tsc --noEmit && vite build",
+    "build:pages": "tsc --noEmit && vite build --base ./",
     "test": "tsx src/engine/selftest.ts"
   },
   "dependencies": {
